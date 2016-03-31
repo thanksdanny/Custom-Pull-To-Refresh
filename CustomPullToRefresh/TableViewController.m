@@ -12,6 +12,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *newtableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl_1;
+@property (nonatomic, strong) UIView *customView;
+@property (nonatomic, strong) NSMutableArray *labelArray;
 
 @end
 
@@ -22,6 +24,13 @@
         _refreshControl_1 = [[UIRefreshControl alloc] init];
     }
     return _refreshControl_1;
+}
+
+- (NSMutableArray *)labelArray {
+    if (_labelArray) {
+        _labelArray = [[NSMutableArray alloc] init];
+    }
+    return _labelArray;
 }
 
 - (void)viewDidLoad {
@@ -75,7 +84,13 @@
 
 #pragma mark - refresh
 - (void)loadCustomRefreshContents {
-    
+    NSArray *refreshContents = [[NSBundle mainBundle] loadNibNamed:@"RefreshContents" owner:self options:nil];
+    self.customView = refreshContents[0];
+    self.customView.frame = self.refreshControl_1.bounds;
+    for (int i = 0; i < self.customView.subviews.count; i++) {
+        [self.labelArray addObject:[self.customView viewWithTag:i + 1]];
+    }
+    [self.refreshControl_1 addSubview:self.customView];
 }
 
 //- (void)animateRefreshStep1 {
