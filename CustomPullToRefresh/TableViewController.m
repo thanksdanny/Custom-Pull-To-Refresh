@@ -9,16 +9,37 @@
 #import "TableViewController.h"
 
 @interface TableViewController () <UITableViewDataSource, UITableViewDelegate>
-@property (strong, nonatomic) IBOutlet UITableView *tableVIew;
+
+@property (strong, nonatomic) IBOutlet UITableView *newtableView;
+@property (nonatomic, strong) UIRefreshControl *refreshControl_1;
 
 @end
 
 @implementation TableViewController
 
+- (UIRefreshControl *)refreshControl_1 {
+    if (!_refreshControl_1) {
+        _refreshControl_1 = [[UIRefreshControl alloc] init];
+    }
+    return _refreshControl_1;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // tableView
+    self.newtableView.rowHeight = UITableViewAutomaticDimension;
+    self.newtableView.estimatedRowHeight = 60.0;
+    self.newtableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.newtableView.delegate = self;
+    self.newtableView.dataSource = self;
     
+    // refresh
+    self.refreshControl_1.backgroundColor = [UIColor clearColor];
+    self.refreshControl_1.tintColor = [UIColor clearColor];
+    [self.newtableView addSubview:self.refreshControl_1];
+    
+    [self loadCustomRefreshContents];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,53 +67,27 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.textLabel.text = [self data][indexPath.row];
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    cell.textLabel.font = [UIFont systemFontOfSize:50];
     
     return cell;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+#pragma mark - refresh
+- (void)loadCustomRefreshContents {
+    
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
+//- (void)animateRefreshStep1 {
+//    BOOL isAnimating = YES;
+//    [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+//        nil;
+//    } completion:^(BOOL finished) {
+//        nil;
+//    }];
+//}
+//
+//- (void)animateRefreshStep2 {
+//    
+//}
 @end

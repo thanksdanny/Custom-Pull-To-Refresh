@@ -13,6 +13,7 @@
 		FDB406ED1CAAF1F30076BEA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDB406EC1CAAF1F30076BEA9 /* Assets.xcassets */; };
 		FDB406F01CAAF1F30076BEA9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDB406EE1CAAF1F30076BEA9 /* LaunchScreen.storyboard */; };
 		FDCBB1541CABCADB00F5701D /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDCBB1531CABCADB00F5701D /* TableViewController.m */; };
+		FDCBB1561CAD715500F5701D /* RefreshContents.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDCBB1551CAD715500F5701D /* RefreshContents.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		FDB406F11CAAF1F30076BEA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FDCBB1521CABCADB00F5701D /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		FDCBB1531CABCADB00F5701D /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
+		FDCBB1551CAD715500F5701D /* RefreshContents.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefreshContents.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				FDB406E41CAAF1F30076BEA9 /* AppDelegate.m */,
 				FDCBB1521CABCADB00F5701D /* TableViewController.h */,
 				FDCBB1531CABCADB00F5701D /* TableViewController.m */,
+				FDCBB1551CAD715500F5701D /* RefreshContents.xib */,
 				FDB406E91CAAF1F30076BEA9 /* Main.storyboard */,
 				FDB406EC1CAAF1F30076BEA9 /* Assets.xcassets */,
 				FDB406EE1CAAF1F30076BEA9 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDB406F01CAAF1F30076BEA9 /* LaunchScreen.storyboard in Resources */,
+				FDCBB1561CAD715500F5701D /* RefreshContents.xib in Resources */,
 				FDB406ED1CAAF1F30076BEA9 /* Assets.xcassets in Resources */,
 				FDB406EB1CAAF1F30076BEA9 /* Main.storyboard in Resources */,
 			);

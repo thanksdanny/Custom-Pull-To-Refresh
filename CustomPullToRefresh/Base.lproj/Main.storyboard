@@ -23,14 +23,9 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="UUw-uc-DNz" id="GWE-Ac-3Hx"/>
-                            <outlet property="delegate" destination="UUw-uc-DNz" id="xdm-7L-sGG"/>
-                        </connections>
                     </tableView>
                     <connections>
-                        <outlet property="tableVIew" destination="Rqi-75-hxQ" id="uOB-u5-2Ma"/>
-                        <outlet property="tableView" destination="Rqi-75-hxQ" id="85c-QI-FNI"/>
+                        <outlet property="newtableView" destination="Rqi-75-hxQ" id="Kuw-gW-IcS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ge-Xm-onN" userLabel="First Responder" sceneMemberID="firstResponder"/>
