@@ -14,10 +14,20 @@
 @property (nonatomic, strong) UIRefreshControl *refreshControl_1;
 @property (nonatomic, strong) UIView *customView;
 @property (nonatomic, strong) NSMutableArray *labelArray;
-
+@property (nonatomic) BOOL isAnimating;
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic) NSUInteger currentColorIndex;
+@property (nonatomic) NSUInteger currentLabelIndex;
 @end
 
 @implementation TableViewController
+
+- (NSTimer *)timer {
+    if (!_timer) {
+        _timer = [[NSTimer alloc] init];
+    }
+    return _timer;
+}
 
 - (UIRefreshControl *)refreshControl_1 {
     if (!_refreshControl_1) {
@@ -93,16 +103,48 @@
     [self.refreshControl_1 addSubview:self.customView];
 }
 
-//- (void)animateRefreshStep1 {
-//    BOOL isAnimating = YES;
-//    [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//        nil;
-//    } completion:^(BOOL finished) {
-//        nil;
-//    }];
-//}
-//
-//- (void)animateRefreshStep2 {
-//    
-//}
+#pragma mark - animate
+
+- (void)animateRefreshStep1 {
+    self.isAnimating =  YES;
+    [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        nil;
+    } completion:^(BOOL finished) {
+        nil;
+    }];
+}
+
+- (void)animateRefreshStep2 {
+    
+}
+
+#pragma mark - 效果
+
+- (UIColor *)getNextColor {
+    NSMutableArray *colorArray = @[[UIColor magentaColor], [UIColor brownColor], [UIColor yellowColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor orangeColor]];
+    if (self.currentColorIndex == colorArray.count) {
+        <#statements#>
+    }
+    return nil;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (self.refreshControl_1.refreshing) {
+        if (!self.isAnimating) {
+            [self doSomething];
+            [self animateRefreshStep1];
+        }
+    }
+}
+
+- (void)doSomething {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(endOfWork) userInfo:nil repeats:true];
+}
+
+- (void)endOfWork {
+    [self.refreshControl_1 endRefreshing];
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
 @end
