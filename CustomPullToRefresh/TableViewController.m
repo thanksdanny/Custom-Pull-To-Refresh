@@ -13,14 +13,37 @@
 @property (strong, nonatomic) IBOutlet UITableView *newtableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl_1;
 @property (nonatomic, strong) UIView *customView;
-@property (nonatomic, strong) NSMutableArray *labelArray;
+@property (nonatomic, strong) NSMutableArray<UILabel *> *labelArray;
 @property (nonatomic) BOOL isAnimating;
 @property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic) NSUInteger currentColorIndex;
-@property (nonatomic) NSUInteger currentLabelIndex;
+@property (nonatomic) int currentColorIndex;
+@property (nonatomic) int currentLabelIndex;
+
 @end
 
 @implementation TableViewController
+#pragma mark - init
+
+- (int)currentLabelIndex {
+    if (!_currentLabelIndex) {
+        _currentLabelIndex = 0;
+    }
+    return _currentLabelIndex;
+}
+
+- (int)currentColorIndex {
+    if (!_currentColorIndex) {
+        _currentColorIndex = 0;
+    }
+    return _currentColorIndex;
+}
+
+- (BOOL)isAnimating {
+    if (!_isAnimating) {
+        _isAnimating = NO;
+    }
+    return _isAnimating;
+}
 
 - (NSTimer *)timer {
     if (!_timer) {
@@ -108,24 +131,81 @@
 - (void)animateRefreshStep1 {
     self.isAnimating =  YES;
     [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-        nil;
+        self.labelArray[self.currentLabelIndex].transform = CGAffineTransformMakeRotation(M_PI_4);
+        self.labelArray[self.currentLabelIndex].textColor = [self getNextColor];
+        
     } completion:^(BOOL finished) {
-        nil;
+        [UIView animateWithDuration:0.05 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+            self.labelArray[self.currentLabelIndex].transform = CGAffineTransformIdentity;
+            self.labelArray[self.currentLabelIndex].textColor = [UIColor blackColor];
+        } completion:^(BOOL finished) {
+            ++self.currentLabelIndex;
+            if (self.currentLabelIndex < self.labelArray.count) {
+                [self animateRefreshStep1];
+            } else {
+                [self animateRefreshStep2];
+            }
+        }];
     }];
 }
 
 - (void)animateRefreshStep2 {
-    
+    [UIView animateWithDuration:0.40 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.labelArray[0].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[1].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[2].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[3].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[4].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[5].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[6].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[7].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[8].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[9].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[10].transform = CGAffineTransformMakeScale(1.5, 1.5);
+        self.labelArray[11].transform = CGAffineTransformMakeScale(1.5, 1.5);
+
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+            self.labelArray[0].transform = CGAffineTransformIdentity;
+            self.labelArray[1].transform = CGAffineTransformIdentity;
+            self.labelArray[2].transform = CGAffineTransformIdentity;
+            self.labelArray[3].transform = CGAffineTransformIdentity;
+            self.labelArray[4].transform = CGAffineTransformIdentity;
+            self.labelArray[5].transform = CGAffineTransformIdentity;
+            self.labelArray[6].transform = CGAffineTransformIdentity;
+            self.labelArray[7].transform = CGAffineTransformIdentity;
+            self.labelArray[8].transform = CGAffineTransformIdentity;
+            self.labelArray[9].transform = CGAffineTransformIdentity;
+            self.labelArray[10].transform = CGAffineTransformIdentity;
+            self.labelArray[11].transform = CGAffineTransformIdentity;
+
+        } completion:^(BOOL finished) {
+            if (self.refreshControl.refreshing) {
+                self.currentLabelIndex = 0;
+                [self animateRefreshStep1];
+            } else {
+                self.isAnimating = NO;
+                self.currentLabelIndex = 0;
+                for (int i = 0; i < self.labelArray.count; ++i) {
+                    self.labelArray[i].textColor = [UIColor blackColor];
+                    self.labelArray[i].transform = CGAffineTransformIdentity;
+                }
+            }
+        }];
+    }];
 }
 
 #pragma mark - 效果
 
 - (UIColor *)getNextColor {
-    NSMutableArray *colorArray = @[[UIColor magentaColor], [UIColor brownColor], [UIColor yellowColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor orangeColor]];
+    NSArray *colorArray = @[[UIColor magentaColor], [UIColor brownColor], [UIColor yellowColor], [UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor orangeColor]];
     if (self.currentColorIndex == colorArray.count) {
-        <#statements#>
+        self.currentColorIndex = 0;
     }
-    return nil;
+    UIColor *returnColor = colorArray[self.currentColorIndex];
+    ++ self.currentColorIndex;
+    
+    return returnColor;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
